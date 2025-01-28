@@ -1,10 +1,10 @@
-const episodeDropdown = document.getElementById('episode-dropdown');
-const episodeImage = document.getElementById('episode-image');
+const levelDropdown = document.getElementById('level-dropdown');
+const levelImage = document.getElementById('level-image');
 const scoreDisplay = document.getElementById('score');
 const feedbackDisplay = document.getElementById('feedback');
 
-let episodes = []; // Array to hold episode names
-let currentEpisode = null;
+let levels = []; // Array to hold photo names
+let currentLevel = null;
 let score = 0;
 
 let highScoreKey = 'highScore_LBP'; // Unique key for LBP high score
@@ -21,8 +21,8 @@ let correctGuesses = gameData.correctGuesses || 0;
 let incorrectGuesses = gameData.incorrectGuesses || 0;
 
 // Function to load photo names (you can hardcode them for now)
-function loadEpisodes() {
-    episodes = [
+function loadLevels() {
+    levels = [
     "1-1 Introduction",
     "1-2 First Steps",
     "1-3 Get A Grip",
@@ -51,11 +51,11 @@ function loadEpisodes() {
     "8-4 The Collector",
     ];
 
-    episodes.forEach(episode => {
+    levels.forEach(level => {
         const option = document.createElement('option');
-        option.value = episode;
-        option.textContent = episode;
-        episodeDropdown.appendChild(option);
+        option.value = level;
+        option.textContent = level;
+        levelDropdown.appendChild(option);
     });
 	
 	// Initialize the score display
@@ -81,18 +81,18 @@ function updateScoreDisplay() {
 
 // Function to start the game
 function startGame() {
-    const randomIndex = Math.floor(Math.random() * episodes.length);
-    currentEpisode = episodes[randomIndex];
+    const randomIndex = Math.floor(Math.random() * levels.length);
+    currentLevel = levels[randomIndex];
 
     // Get a random photo from the level's folder
-    const randomFrame = getRandomFrame();
-    episodeImage.src = `frames/${currentEpisode}/${randomFrame}`; // Set the image source to the random photo
+    const randomPhoto = getRandomPhoto();
+    levelImage.src = `photos/${currentLevel}/${randomPhoto}`; // Set the image source to the random photo
 }
 
 // Function to get a random photo
-function getRandomFrame() {
-    const frameNumber = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
-    const formattedNumber = String(frameNumber).padStart(3, '0'); // Format as "001" to "010"
+function getRandomPhoto() {
+    const photoNumber = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
+    const formattedNumber = String(photoNumber).padStart(3, '0'); // Format as "001" to "010"
     return `photo_${formattedNumber}.png`;
 }
 
@@ -114,14 +114,14 @@ document.getElementById('reset-score').addEventListener('click', resetScore);
 
 // Function to check guess
 document.getElementById('submit-guess').addEventListener('click', () => {
-    const userGuess = episodeDropdown.value;
-    if (userGuess === currentEpisode) {
+    const userGuess = levelDropdown.value;
+    if (userGuess === currentLevel) {
         score++;
 		correctGuesses++; // Increase correct guesses
         feedbackDisplay.textContent = "Correct!";
     } else {
 		incorrectGuesses++; // Increase incorrect guesses
-        feedbackDisplay.textContent = `Incorrect! It was ${currentEpisode}.`;
+        feedbackDisplay.textContent = `Incorrect! It was ${currentLevel}.`;
         // Reset score if guess is incorrect
         score = 0;
     }
@@ -144,4 +144,4 @@ document.getElementById('submit-guess').addEventListener('click', () => {
 });
 
 // Load the levels on page load
-loadEpisodes();
+loadLevels();
