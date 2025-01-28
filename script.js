@@ -7,7 +7,7 @@ let episodes = []; // Array to hold episode names
 let currentEpisode = null;
 let score = 0;
 
-let highScoreKey = 'highScore_LBP'; // Unique key for Gravity Falls high score
+let highScoreKey = 'highScore_LBP'; // Unique key for LBP high score
 // Retrieve saved values from localStorage or initialize with defaults
 let gameData = JSON.parse(localStorage.getItem(highScoreKey)) || {
     highScore: 0,
@@ -61,7 +61,7 @@ function loadEpisodes() {
 	// Initialize the score display
     updateScoreDisplay();
 
-    // Start the game by selecting a random episode and image
+    // Start the game by selecting a random level and image
     startGame();
 }
 
@@ -84,12 +84,12 @@ function startGame() {
     const randomIndex = Math.floor(Math.random() * episodes.length);
     currentEpisode = episodes[randomIndex];
 
-    // Get a random frame image from the episode's folder
+    // Get a random image from the level's folder
     const randomFrame = getRandomFrame();
     episodeImage.src = `frames/${currentEpisode}/${randomFrame}`; // Set the image source to the random frame
 }
 
-// Function to get a random frame from the episode
+// Function to get a random image from a level
 function getRandomFrame() {
     const frameNumber = Math.floor(Math.random() * 10) + 1; // Random number between 1 and 10
     const formattedNumber = String(frameNumber).padStart(3, '0'); // Format as "001" to "010"
@@ -143,5 +143,5 @@ document.getElementById('submit-guess').addEventListener('click', () => {
     startGame(); // Start a new game round
 });
 
-// Load the episodes on page load
+// Load the levels on page load
 loadEpisodes();
